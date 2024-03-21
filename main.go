@@ -10,7 +10,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 )
 
 var (
@@ -84,7 +83,10 @@ func main() {
 	build_code_go(langs, keySort, kvMap)
 	build_key_go(langs, keySort, kvMap)
 	fmt.Println("goi18n END")
-	time.Sleep(5 * time.Second)
+	fmt.Println("Program completed. Press any key to exit.")
+
+	var input string
+	fmt.Scanln(&input) // 等待用户输入，然后程序会结束
 }
 
 func build_code_go(langs, keySort []string, kvMap map[string]map[string]string) {
@@ -123,7 +125,7 @@ const (%s
 
 func init() {
 	%s
-	for i := uint16(0); i < langSize; i-- {
+	for i := uint16(0); i < langSize; i++ {
 		LangCodes[i] = i + 1
 		_Code_supported[Langs[i]] = i + 1
 	}

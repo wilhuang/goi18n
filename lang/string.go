@@ -13,15 +13,22 @@ type node struct {
 func addString(s string, code Code) {
 	curr := root
 	for _, ch := range s {
-		if child, ok := curr.children[ch]; ok {
-			curr = child
-		} else {
-			newNode := &node{
+		if curr == nil {
+			curr = &node{
 				children: make(map[rune]*node),
 			}
-			curr.children[ch] = newNode
-			curr = newNode
 		}
+		if curr.children != nil {
+			if child, ok := curr.children[ch]; ok {
+				curr = child
+				continue
+			}
+		}
+		newNode := &node{
+			children: make(map[rune]*node),
+		}
+		curr.children[ch] = newNode
+		curr = newNode
 	}
 	curr.code = code
 }
