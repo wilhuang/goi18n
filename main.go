@@ -100,7 +100,6 @@ func build_code_go(langs, keySort []string, kvMap map[string]map[string]string) 
 			keyEnumBuilder.WriteString(" // " + desc)
 		}
 	}
-	initBuilder.WriteString("SetDefaultLocale(" + LANG_PREFIX + strings.ToUpper(formatLocale(FLAG_LANG)) + ")")
 	for i, locale := range langs {
 		varName := LANG_PREFIX + strings.ToUpper(formatLocale(locale))
 		langsBuilder.WriteString(fmt.Sprintf("\n	%s = %s", varName, strconv.Quote(locale)))
@@ -123,25 +122,29 @@ var (
 const (%s
 )
 
-func init() {
-	%s
+func init() {%s
 	for i := uint16(0); i < langSize; i++ {
 		LangCodes[i] = i + 1
 		_Code_supported[Langs[i]] = i + 1
 	}
+	SetDefaultLocale(%s)
 }
 
 const (
 	_start Code = 1000 + iota%s
 	_end
 )
-`, len(langs), langsBuilder.String(), initBuilder.String(), keyEnumBuilder.String())
+`, len(langs),
+		langsBuilder.String(),
+		initBuilder.String(),
+		LANG_PREFIX+strings.ToUpper(formatLocale(FLAG_LANG)),
+		keyEnumBuilder.String())
 
 	mapFile := fmt.Sprintf(`package lang
 
 func init() {%s
 }
-	`, keyMapBuilder.String())
+`, keyMapBuilder.String())
 
 	err := output(FLAG_OUT, "enum.go", enumFile)
 	if err != nil {
