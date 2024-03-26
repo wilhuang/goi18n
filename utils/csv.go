@@ -6,9 +6,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
-
-	"golang.org/x/text/encoding/simplifiedchinese"
-	"golang.org/x/text/transform"
+	// "golang.org/x/text/encoding/simplifiedchinese"
+	// "golang.org/x/text/transform"
 )
 
 type FileInfo struct {
@@ -34,10 +33,11 @@ func ReadCSV(fileName string, kvMap map[string]map[string]string, codeMap map[st
 	defer file.Close()
 
 	// 创建一个GBK编码的reader
-	reader := transform.NewReader(file, simplifiedchinese.GBK.NewDecoder())
+	// reader := transform.NewReader(file, simplifiedchinese.GBK.NewDecoder())
 
 	// 创建一个CSV Reader
-	csvReader := csv.NewReader(reader)
+	// csvReader := csv.NewReader(reader)
+	csvReader := csv.NewReader(file)
 	// 读取CSV文件中的内容
 
 	row, err := csvReader.Read()

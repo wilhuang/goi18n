@@ -1,22 +1,22 @@
 0,,zh_CN,en_US,zh-aa,en -bb
-,ERROR_CODE_10001,²ÎÊı´íÎó,The parameter is incorrect,²ÎÊı´íÎó,The parameter is incorrect
-,ERROR_CODE_10002,»ñÈ¡¶şÎ¬ÂëÊ§°Ü£¬Çë¼ì²éÉè±¸Éí·İ!,"Failed to get the QR code, please check the device identity",»ñÈ¡¶şÎ¬ÂëÊ§°Ü£¬Çë¼ì²éÉè±¸Éí·İ!,"Failed to get the QR code, please check the device identity"
-,ERROR_CODE_10003,Î´ÖªµÄÎ»ºÅ,Unknow tag,Î´ÖªµÄÎ»ºÅ,Unknow tag
-,ERROR_CODE_10004,²Ù×÷Òì³££¬ÇëÖØÊÔ,"The operation is abnormal, please try again",²Ù×÷Òì³££¬ÇëÖØÊÔ,"The operation is abnormal, please try again"
-,ERROR_CODE_10005,Êı¾İ³õÊ¼»¯ÖĞ£¬ÇëÉÔµÈ,"Initializing, please wait",Êı¾İ³õÊ¼»¯ÖĞ£¬ÇëÉÔµÈ,"Initializing, please wait"
-,STR_INTERFACE_RESPONSE_146,Ö»ÄÜÉÏ´«XMLÎÄ¼ş,Only XML files can be uploaded!,Ö»ÄÜÉÏ´«XMLÎÄ¼ş,Only XML files can be uploaded!
-,STR_INTERFACE_RESPONSE_147,ÏÂÔØ£¨%s£©ÎÄ¼şÊ§°Ü,The download of the file (%s) failed,ÏÂÔØ£¨%s£©ÎÄ¼şÊ§°Ü,The download of the file (%s) failed
-,STR_INTERFACE_RESPONSE_148,ÎÄ¼ş¼ĞÃû³Æ²»ÄÜÎª¿Õ,The folder name cannot be empty,ÎÄ¼ş¼ĞÃû³Æ²»ÄÜÎª¿Õ,The folder name cannot be empty
-,STR_INTERFACE_RESPONSE_149,É¾³ı¶ÔÏóÎª¿Õ,The object to be deleted is empty,É¾³ı¶ÔÏóÎª¿Õ,The object to be deleted is empty
-,STR_INTERFACE_RESPONSE_150,²»Ö§³ÖÎÄ¼ş¼ĞÒÆ¶¯,Folder movement is not supported,²»Ö§³ÖÎÄ¼ş¼ĞÒÆ¶¯,Folder movement is not supported
-,STR_INTERFACE_RESPONSE_151,ÎÄ¼ş²»´æÔÚ,The file does not exist,ÎÄ¼ş²»´æÔÚ,The file does not exist
-,STR_INTERFACE_RESPONSE_152,²éÑ¯Ê§°Ü,The query failed,²éÑ¯Ê§°Ü,The query failed
-,STR_INTERFACE_RESPONSE_153,´æÔÚÍ¬ÃûÎÄ¼ş¼Ğ£¬ĞŞ¸ÄºóÖØÊÔ,"Existing folder with the same name, please try again after modification.",´æÔÚÍ¬ÃûÎÄ¼ş¼Ğ£¬ĞŞ¸ÄºóÖØÊÔ,"Existing folder with the same name, please try again after modification."
-,STR_INTERFACE_RESPONSE_154,ÎÄ¼ş¼ĞÃû³Æ²»ÄÜ³¬¹ı%d¸ö×Ö·û,The folder name cannot exceed %d characters,ÎÄ¼ş¼ĞÃû³Æ²»ÄÜ³¬¹ı%d¸ö×Ö·û,The folder name cannot exceed %d characters
-,STR_INTERFACE_RESPONSE_155,"ÎÄ¼ş¼ĞÃû³Æ²»ÄÜ³öÏÖÒÔÏÂÌØÊâ×Ö·û£º\/:*?""<>|","The folder name cannot contain the following special characters: \/:*?""<>|","ÎÄ¼ş¼ĞÃû³Æ²»ÄÜ³öÏÖÒÔÏÂÌØÊâ×Ö·û£º\/:*?""<>|","The folder name cannot contain the following special characters: \/:*?""<>|"
-,STR_INTERFACE_RESPONSE_156,ÏÂÔØÊ§°Ü,Download failed,ÏÂÔØÊ§°Ü,Download failed
-,STR_INTERFACE_RESPONSE_157,ÏÂÔØ³ÉÑ¹Ëõ°üÊ§°Ü£¬ÏÂÔØÊıÁ¿ÉÙÓÚ%d¸ö,"The download failed as a compressed file, with fewer than %d items downloaded",ÏÂÔØ³ÉÑ¹Ëõ°üÊ§°Ü£¬ÏÂÔØÊıÁ¿ÉÙÓÚ%d¸ö,"The download failed as a compressed file, with fewer than %d items downloaded"
-,STR_INTERFACE_RESPONSE_158,µ¼³öÊı¾İÎª¿Õ,The export data is empty,µ¼³öÊı¾İÎª¿Õ,The export data is empty
-,STR_INTERFACE_RESPONSE_159,²»Ö§³ÖµÄºó×ºÀàĞÍ,Unsupported suffix types,²»Ö§³ÖµÄºó×ºÀàĞÍ,Unsupported suffix types
-,STR_INTERFACE_RESPONSE_165,·Ç·¨ÎÄ¼ş£¬Çë¼ì²éºóÖØĞÂµ¼Èë,"Invalid file, please check and import again",·Ç·¨ÎÄ¼ş£¬Çë¼ì²éºóÖØĞÂµ¼Èë,"Invalid file, please check and import again"
-,STR_INTERFACE_RESPONSE_166,ÉÏ´«Ê§°Ü£ºÇë¼ì²éÅäÖÃÎÄ¼ş,"Upload failed, please check the configuration file",ÉÏ´«Ê§°Ü£ºÇë¼ì²éÅäÖÃÎÄ¼ş,"Upload failed, please check the configuration file"
+,ERROR_CODE_10001,å‚æ•°é”™è¯¯,The parameter is incorrect,å‚æ•°é”™è¯¯,The parameter is incorrect
+,ERROR_CODE_10002,è·å–äºŒç»´ç å¤±è´¥ï¼Œè¯·æ£€æŸ¥è®¾å¤‡èº«ä»½!,"Failed to get the QR code, please check the device identity",è·å–äºŒç»´ç å¤±è´¥ï¼Œè¯·æ£€æŸ¥è®¾å¤‡èº«ä»½!,"Failed to get the QR code, please check the device identity"
+,ERROR_CODE_10003,æœªçŸ¥çš„ä½å·,Unknow tag,æœªçŸ¥çš„ä½å·,Unknow tag
+,ERROR_CODE_10004,æ“ä½œå¼‚å¸¸ï¼Œè¯·é‡è¯•,"The operation is abnormal, please try again",æ“ä½œå¼‚å¸¸ï¼Œè¯·é‡è¯•,"The operation is abnormal, please try again"
+,ERROR_CODE_10005,æ•°æ®åˆå§‹åŒ–ä¸­ï¼Œè¯·ç¨ç­‰,"Initializing, please wait",æ•°æ®åˆå§‹åŒ–ä¸­ï¼Œè¯·ç¨ç­‰,"Initializing, please wait"
+,STR_INTERFACE_RESPONSE_146,åªèƒ½ä¸Šä¼ XMLæ–‡ä»¶,Only XML files can be uploaded!,åªèƒ½ä¸Šä¼ XMLæ–‡ä»¶,Only XML files can be uploaded!
+,STR_INTERFACE_RESPONSE_147,ä¸‹è½½ï¼ˆ%sï¼‰æ–‡ä»¶å¤±è´¥,The download of the file (%s) failed,ä¸‹è½½ï¼ˆ%sï¼‰æ–‡ä»¶å¤±è´¥,The download of the file (%s) failed
+,STR_INTERFACE_RESPONSE_148,æ–‡ä»¶å¤¹åç§°ä¸èƒ½ä¸ºç©º,The folder name cannot be empty,æ–‡ä»¶å¤¹åç§°ä¸èƒ½ä¸ºç©º,The folder name cannot be empty
+,STR_INTERFACE_RESPONSE_149,åˆ é™¤å¯¹è±¡ä¸ºç©º,The object to be deleted is empty,åˆ é™¤å¯¹è±¡ä¸ºç©º,The object to be deleted is empty
+,STR_INTERFACE_RESPONSE_150,ä¸æ”¯æŒæ–‡ä»¶å¤¹ç§»åŠ¨,Folder movement is not supported,ä¸æ”¯æŒæ–‡ä»¶å¤¹ç§»åŠ¨,Folder movement is not supported
+,STR_INTERFACE_RESPONSE_151,æ–‡ä»¶ä¸å­˜åœ¨,The file does not exist,æ–‡ä»¶ä¸å­˜åœ¨,The file does not exist
+,STR_INTERFACE_RESPONSE_152,æŸ¥è¯¢å¤±è´¥,The query failed,æŸ¥è¯¢å¤±è´¥,The query failed
+,STR_INTERFACE_RESPONSE_153,å­˜åœ¨åŒåæ–‡ä»¶å¤¹ï¼Œä¿®æ”¹åé‡è¯•,"Existing folder with the same name, please try again after modification.",å­˜åœ¨åŒåæ–‡ä»¶å¤¹ï¼Œä¿®æ”¹åé‡è¯•,"Existing folder with the same name, please try again after modification."
+,STR_INTERFACE_RESPONSE_154,æ–‡ä»¶å¤¹åç§°ä¸èƒ½è¶…è¿‡%dä¸ªå­—ç¬¦,The folder name cannot exceed %d characters,æ–‡ä»¶å¤¹åç§°ä¸èƒ½è¶…è¿‡%dä¸ªå­—ç¬¦,The folder name cannot exceed %d characters
+,STR_INTERFACE_RESPONSE_155,"æ–‡ä»¶å¤¹åç§°ä¸èƒ½å‡ºç°ä»¥ä¸‹ç‰¹æ®Šå­—ç¬¦ï¼š\/:*?""<>|","The folder name cannot contain the following special characters: \/:*?""<>|","æ–‡ä»¶å¤¹åç§°ä¸èƒ½å‡ºç°ä»¥ä¸‹ç‰¹æ®Šå­—ç¬¦ï¼š\/:*?""<>|","The folder name cannot contain the following special characters: \/:*?""<>|"
+,STR_INTERFACE_RESPONSE_156,ä¸‹è½½å¤±è´¥,Download failed,ä¸‹è½½å¤±è´¥,Download failed
+,STR_INTERFACE_RESPONSE_157,ä¸‹è½½æˆå‹ç¼©åŒ…å¤±è´¥ï¼Œä¸‹è½½æ•°é‡å°‘äº%dä¸ª,"The download failed as a compressed file, with fewer than %d items downloaded",ä¸‹è½½æˆå‹ç¼©åŒ…å¤±è´¥ï¼Œä¸‹è½½æ•°é‡å°‘äº%dä¸ª,"The download failed as a compressed file, with fewer than %d items downloaded"
+,STR_INTERFACE_RESPONSE_158,å¯¼å‡ºæ•°æ®ä¸ºç©º,The export data is empty,å¯¼å‡ºæ•°æ®ä¸ºç©º,The export data is empty
+,STR_INTERFACE_RESPONSE_159,ä¸æ”¯æŒçš„åç¼€ç±»å‹,Unsupported suffix types,ä¸æ”¯æŒçš„åç¼€ç±»å‹,Unsupported suffix types
+,STR_INTERFACE_RESPONSE_165,éæ³•æ–‡ä»¶ï¼Œè¯·æ£€æŸ¥åé‡æ–°å¯¼å…¥,"Invalid file, please check and import again",éæ³•æ–‡ä»¶ï¼Œè¯·æ£€æŸ¥åé‡æ–°å¯¼å…¥,"Invalid file, please check and import again"
+,STR_INTERFACE_RESPONSE_166,ä¸Šä¼ å¤±è´¥ï¼šè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶,"Upload failed, please check the configuration file",ä¸Šä¼ å¤±è´¥ï¼šè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶,"Upload failed, please check the configuration file"

@@ -22,7 +22,6 @@ const (
 )
 
 func init() {
-	SetDefaultLocale(I18N_ZH_CN)
 	Langs[0] = I18N_ZH_CN
 	Langs[1] = I18N_ZH_AA
 	Langs[2] = I18N_EN_US
@@ -30,10 +29,11 @@ func init() {
 	Langs[4] = I18N_CC
 	Langs[5] = I18N_BB
 	Langs[6] = I18N_AA
-	for i := uint16(0); i < langSize; i-- {
+	for i := uint16(0); i < langSize; i++ {
 		LangCodes[i] = i + 1
 		_Code_supported[Langs[i]] = i + 1
 	}
+	SetDefaultLocale(I18N_ZH_CN)
 }
 
 const (
