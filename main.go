@@ -93,7 +93,7 @@ func build_code_go(langs, keySort []string, kvMap map[string]map[string]string) 
 	var langsBuilder, initBuilder, keyEnumBuilder, keyMapBuilder strings.Builder
 
 	for _, key := range keySort {
-		keyMapBuilder.WriteString(fmt.Sprintf("\n	addString(\"%s\", %s)", key, key))
+		keyMapBuilder.WriteString(fmt.Sprintf("\n	r.Add(\"%s\", %s)", key, key))
 		keyEnumBuilder.WriteString("\n	" + key)
 		for _, langstr := range langs {
 			desc := strings.ReplaceAll(kvMap[key][langstr], "\n", "")
@@ -142,7 +142,9 @@ const (
 
 	mapFile := fmt.Sprintf(`package lang
 
-func init() {%s
+func init() {
+	r := newDoubleLinkNode()%s
+	r.End()
 }
 `, keyMapBuilder.String())
 
