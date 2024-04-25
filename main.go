@@ -33,6 +33,8 @@ func init() {
 2: Ascll码降序(单表)
 3: Ascll码升序(全局)
 4: Ascll码降序(全局)`)
+
+	flag.Parse()
 }
 
 // langkey eg:zh_CN
