@@ -7,7 +7,6 @@ package lang
 
 const _NUM_LANG uint16 = 8 // 不包含key
 
-
 const (
 	I18N_ZH_CN = "zh_CN"
 	I18N_ZH_AA = "zh-aa"
@@ -18,7 +17,6 @@ const (
 	I18N_BB = "bb"
 	I18N_AA = "aa"
 )
-
 var _default_langsort = [_NUM_LANG]string{
 	I18N_ZH_CN,
 	I18N_ZH_AA,
