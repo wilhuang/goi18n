@@ -6,212 +6,140 @@
 package lang
 
 import (
-	"fmt"
-)
-
-const (
-	_KEY_LANG_STR         = "k" // 关键字对应的语言标识
-	_KEY_LANG_CODE uint16 = 0   // 关键字对应的内部语言标识
+	"strconv"
+	"sync"
 )
 
 var (
-	_default_langstr  string = _KEY_LANG_STR
-	_default_langcode uint16 = _KEY_LANG_CODE
+	_default_locale string = _LANGS[0]
+	_default_id     int    = 0
+)
+var (
+	_LANG_ID    = map[string]int{} // 语言对应的内部标识
+	_MUTEX_STEP = sync.RWMutex{}
+	_LANG_SEP   = map[int]string{} // 语言对应的分隔符
 )
 
-// 语言对应的顺序
-var _code_sort [_NUM_LANG]uint16
-
-// 语言对应的内部标识
-var _code_supported = map[string]uint16{
-	_KEY_LANG_STR: _KEY_LANG_CODE,
-}
-
-// 语言对应的分隔符
-var _code_separator = map[uint16]string{
-	_KEY_LANG_CODE: ",",
-}
-
 func init() {
-	for i := range _default_langsort {
-		langCode := uint16(i + 1)
-		_code_sort[i] = langCode
-		_code_supported[_default_langsort[i]] = langCode
-		_code_separator[langCode] = ","
+	_LANG_ID = make(map[string]int, I18N_LEN)
+	_LANG_SEP = make(map[int]string, I18N_LEN)
+	for id, langstr := range _LANGS {
+		_LANG_ID[langstr] = id
+		_LANG_SEP[id] = ","
 	}
 
-	SetDefaultLocale(_default_langsort[0])
+	SetDefaultLocale(_default_locale)
 }
 
 // IsLocaleSupport 语言是否支持
-func IsLocaleSupport(locale string) bool {
-	_, ok := _code_supported[locale]
+func IsLocaleSupport(l string) bool {
+	_, ok := _LANG_ID[l]
 	return ok
 }
 
+// GetDefaultLocale 获取默认语言
 func GetDefaultLocale() string {
-	return _default_langstr
+	return _default_locale
 }
 
-// setDefaultLocale 设置默认语言
-func SetDefaultLocale(locale string) bool {
-	langCode, ok := _code_supported[locale]
+// setDefaultl 设置默认语言
+func SetDefaultLocale(l string) bool {
+	id, ok := _LANG_ID[l]
 	if ok {
-		_default_langstr = locale
-		_default_langcode = langCode
+		_default_locale = l
+		_default_id = id
 	}
 	return ok
 }
 
 // SetSeparator 设置分隔符
-func SetSeparator(locale string, sep string) bool {
-	langCode, ok := _code_supported[locale]
+func SetSeparatorAll(sep string) {
+	_MUTEX_STEP.Lock()
+	for id := range _LANG_SEP {
+		_LANG_SEP[id] = sep
+	}
+	_MUTEX_STEP.Unlock()
+}
+
+// SetSeparator 设置分隔符
+func SetSeparator(l string, sep string) bool {
+	id, ok := _LANG_ID[l]
 	if ok {
-		_code_separator[langCode] = sep
+		_MUTEX_STEP.Lock()
+		_LANG_SEP[id] = sep
+		_MUTEX_STEP.Unlock()
 	}
 	return ok
 }
 
-func GetLocaleSort() [_NUM_LANG]string {
-	var locales [_NUM_LANG]string
-	for i, langCode := range _code_sort {
-		locales[i] = _default_langsort[langCode-1]
-	}
-	return locales
+// GetDefaultId 获取默认语言的内部标识
+func GetDefaultId() int {
+	return _default_id
 }
 
-func SetLocaleSort(locales ...string) error {
-	if len(locales) != int(_NUM_LANG) {
-		return fmt.Errorf("locale size must be %d", _NUM_LANG)
+// GetLocaleId 获取语言对应的内部标识
+func GetLocaleId(l string) int {
+	id, ok := _LANG_ID[l]
+	if ok {
+		return id
 	}
-	var toSetSort [_NUM_LANG]uint16
-	for idx, locale := range locales {
-		langCode, ok := _code_supported[locale]
-		if !ok {
-			return fmt.Errorf("locale %s not support", locale)
-		}
-		toSetSort[idx] = langCode
-	}
-	_code_sort = toSetSort
-	return nil
+	return _default_id
+}
+
+// GetLocaleIds 获取所有语言对应的内部标识
+func GetLocaleIds() [I18N_LEN]string {
+	ls := _LANGS
+	return ls
 }
 
 type Code uint32 // 国际化的对象结构
 
-// _transOne 读取翻译
-func (i Code) _transOne(locale uint16) string {
-	if i <= _start {
+// transOne 读取翻译
+func (c Code) transOne(id int) string {
+	if c < ERR_CODE_UNKNOW || c >= _end {
+		return _LANGS[id] + "{" + strconv.FormatInt(int64(c), 10) + "}"
+	}
+
+	if c <= _start {
 		// TODO 后续添加内置错误码
 		return "ERR_CODE_UNKNOW"
 	}
-
-	if i < _end {
-		return entries[locale][i-_start-1]
-	}
-
-	return fmt.Sprintf("Code[%d](%d)", locale, i)
+	return entries[id][c-_start-1]
 }
 
 // String 获取string类型的key值
-func (i Code) String() string {
-	return i._transOne(0)
+func (c Code) String() string {
+	return c.transOne(I18N_LEN)
 }
 
-func (i Code) _trans(locale uint16, args ...any) string {
-	msg := i._transOne(locale)
-	if len(args) > 0 {
-		if len(msg) == 0 {
-			return ""
-		}
-		var com []any
-		for _, arg := range args {
-			switch v := arg.(type) {
-			case Code:
-				com = append(com, v._transOne(locale))
-			case []Code:
-				com = append(com, Join(v, _code_separator[locale], func(c Code) string {
-					return c._transOne(locale)
-				}))
-			case []string:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []float64:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []float32:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []int:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []int8:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []int16:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []int32:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []int64:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []uint:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []uint8:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []uint16:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []uint32:
-				com = append(com, Join(v, _code_separator[locale]))
-			case []uint64:
-				com = append(com, Join(v, _code_separator[locale]))
-			default:
-				com = append(com, arg)
-			}
-		}
-		return fmt.Sprintf(msg, com...)
-	}
-	return msg
+// TransById 获取指定语言的翻译
+//   - id  指定语言的Id
+//   - args   Code类型或fmt支持的类型
+func (c Code) TransById(id int, args ...any) string {
+	return AppendArgs(c.transOne(id), id, args...)
 }
 
 // Default 获取默认语言的翻译
 //   - args   Code类型或fmt支持的类型
-func (i Code) Default(args ...any) string {
-	return i._trans(_default_langcode, args...)
+func (c Code) Default(args ...any) string {
+	id := _default_id
+	return AppendArgs(c.transOne(id), id, args...)
 }
 
 // Trans 获取指定语言的翻译
-//   - locale 指定的语言版本
+//   - l 指定的语言版本
 //   - args   Code类型或fmt支持的类型，其中Code类型是直接插入原Code的，也就是说如果Code包含%[1]s，那么可能会出现冲突
-func (i Code) Trans(locale string, args ...any) string {
-	langCode, ok := _code_supported[locale]
-	if !ok {
-		langCode = _default_langcode
-	}
-	return i._trans(langCode, args...)
+func (c Code) Trans(l string, args ...any) string {
+	id := GetLocaleId(l)
+	return AppendArgs(c.transOne(id), id, args...)
 }
 
 // TransAll 获取全部翻译
-func (i Code) TransAll(args ...any) [_NUM_LANG]string {
-	var str [_NUM_LANG]string
-	for idx, langCode := range _code_sort {
-		str[idx] = i._trans(langCode)
+//   - args Code类型或fmt支持的类型
+func (c Code) TransAll(args ...any) [I18N_LEN]string {
+	var str [I18N_LEN]string
+	for id := range _LANGS {
+		str[id] = AppendArgs(c.transOne(id), id, args...)
 	}
 	return str
-}
-
-// Error 获取指定语言错误类型的翻译
-//   - locale 指定的语言版本
-//   - args   Code类型或fmt支持的类型
-func (i Code) Error(locale string, args ...any) error {
-	langCode, ok := _code_supported[locale]
-	if !ok {
-		langCode = _default_langcode
-	}
-	return NewError(i._trans(langCode, args...))
-}
-
-type CodeError struct {
-	s string
-}
-
-func (e *CodeError) Error() string {
-	return e.s
-}
-
-func NewError(s string) error {
-	return &CodeError{s}
 }

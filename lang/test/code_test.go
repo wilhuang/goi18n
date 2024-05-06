@@ -1,31 +1,15 @@
 package test
 
 import (
-	"fmt"
 	"goi18n/lang"
-	"math/rand"
-	"sort"
 	"strings"
 	"testing"
 	"time"
 )
 
-func Test(t *testing.T) {
+func CodeTest(t *testing.T) {
 	nt := time.Now()
-	langsTmp := lang.GetLocaleSort()
-	t.Log(langsTmp)
-	langs := make([]string, len(langsTmp))
-	copy(langs, langsTmp[:])
-	sort.Slice(langs, func(i, j int) bool {
-		return rand.Intn(2) == 0
-	})
-	lang.SetLocaleSort(langs...)
-	langsNew := lang.GetLocaleSort()
-	for i, langstr := range langsNew {
-		if langstr != langs[i] {
-			t.Fatalf("Langs Error")
-		}
-	}
+	langs := lang.GetLocaleIds()
 	codes := []lang.Code{
 		lang.ENTRIE_SPECIAL,
 		lang.ENTRIE_NORMAL,
@@ -43,6 +27,27 @@ func Test(t *testing.T) {
 			}
 		}
 	}
+	// 常规方法测试
+	for id, locale := range langs {
+		t.Log("Locale:", locale)
+		for _, code := range codes {
+			trans := code.Trans(locale)
+			if code.TransById(id) != trans {
+				t.Fatalf("Lang:%s[%d] TranById() != Trans()", locale, code)
+			}
+			codeStr := code.String()
+			if codeStr == "ERR_CODE_UNKNOW" || strings.HasPrefix(codeStr, "Code[") {
+				t.Fatalf("Lang:%s[%d] String() Error", locale, code)
+			}
+			if lang.ToCode(codeStr) <= 0 {
+				t.Fatalf("Lang:%s[%d] CodeString() Error", locale, code)
+			}
+			if lang.ToCode(codeStr).Trans(locale) != trans {
+				t.Fatalf("Lang:%s[%d] ToLocaleString() != Trans()", locale, code)
+			}
+		}
+	}
+	// 默认方法与一些特例测试
 	for _, locale := range langs {
 		t.Log("Locale:", locale)
 		lang.SetDefaultLocale(locale)
@@ -54,22 +59,9 @@ func Test(t *testing.T) {
 			if code.Default() != trans {
 				t.Fatalf("Lang:%s[%d] Default() != Trans()", locale, code)
 			}
-			codeStr := code.String()
-			if codeStr == "ERR_CODE_UNKNOW" || strings.HasPrefix(codeStr, "Code[") {
-				t.Fatalf("Lang:%s[%d] String() Error", locale, code)
-			}
-			if lang.CodeString(codeStr) <= 0 {
-				t.Fatalf("Lang:%s[%d] CodeString() Error", locale, code)
-			}
-			if lang.ToLocaleString(codeStr, locale) != trans {
-				t.Fatalf("Lang:%s[%d] ToLocaleString() != Trans()", locale, code)
-			}
 			if code <= lang.ENTRIE_4 {
 				t.Log(trans)
 			}
-		}
-		if locale == "xx" {
-			fmt.Println("zh-aa", locale)
 		}
 		t.Log(lang.ENTRIE_ORDER.Trans(locale, "a", 2.0, 3))
 		t.Log(lang.ENTRIE_ORDER.Trans(locale, []string{"a", "b"}, 2.0, 3))

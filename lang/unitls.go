@@ -10,6 +10,25 @@ import (
 	"strings"
 )
 
+func Max[T Number](x T, y ...T) T {
+	m := x
+	for i := range y {
+		if y[i] > m {
+			m = y[i]
+		}
+	}
+	return m
+}
+func Min[T Number](x T, y ...T) T {
+	m := x
+	for i := range y {
+		if y[i] > m {
+			m = y[i]
+		}
+	}
+	return m
+}
+
 func Join[T any](elems []T, sep string, fu ...func(elem T) string) string {
 	if len(elems) == 0 {
 		return ""

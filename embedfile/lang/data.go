@@ -5,7 +5,7 @@
  */
 package lang
 
-var entries = [_NUM_LANG + 1][_end - _start - 1]string{
+var entries = [I18N_LEN + 1][_end - _start - 1]string{
 	{},
 	{},
 	{},

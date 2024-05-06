@@ -5,7 +5,13 @@
  */
 package lang
 
-const ERR_CODE_UNKNOW Code = 0 + iota
+import (
+	"fmt"
+)
+
+const (
+	ERR_CODE_UNKNOW Code = iota
+)
 
 // 使用 radix 树（或称为字典树）来存储字符串前缀
 type doubleLinkNode struct {
@@ -96,8 +102,8 @@ func traverseDelLeaf(n *doubleLinkNode) {
 	}
 }
 
-// CodeString 通过string类型的key值获取Code对象
-func CodeString(s string) Code {
+// ToCode 通过string类型的key值获取Code对象
+func ToCode(s string) Code {
 	curr := root
 	for _, ch := range s {
 		child, ok := curr.child[ch]
@@ -112,30 +118,109 @@ func CodeString(s string) Code {
 	return curr.code
 }
 
-// ToLocaleString 通过string类型的key值获取翻译
-func ToLocaleString(s, locale string) string {
-	if codeKey := CodeString(s); codeKey != ERR_CODE_UNKNOW {
-		return codeKey.Trans(locale)
+func AppendArgs(msg string, id int, args ...any) string {
+	if len(args) == 0 || len(msg) == 0 {
+		return msg
 	}
-	return s
-}
 
-// ToLocaleString 通过string类型的key值获取默认翻译
-func ToLocaleDefault(s string) string {
-	if codeKey := CodeString(s); codeKey != ERR_CODE_UNKNOW {
-		return codeKey.Default()
+	noLock := true
+	com := make([]any, len(args))
+	for idx, arg := range args {
+		switch v := arg.(type) {
+		case Code:
+			com[idx] = v.transOne(id)
+		case []Code:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id], func(c Code) string {
+				return c.transOne(id)
+			})
+		case []string:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []float64:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []float32:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []int:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []int8:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []int16:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []int32:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []int64:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []uint:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []uint8:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []uint16:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []uint32:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		case []uint64:
+			if noLock {
+				_MUTEX_STEP.RLock()
+				noLock = false
+			}
+			com[idx] = Join(v, _LANG_SEP[id])
+		default:
+			com[idx] = arg
+		}
 	}
-	return s
-}
-
-// ToLocaleStringAll 通过string类型的key值获取全部翻译
-func ToLocaleStringAll(s string) [_NUM_LANG]string {
-	if codeKey := CodeString(s); codeKey != ERR_CODE_UNKNOW {
-		return codeKey.TransAll()
+	if !noLock {
+		_MUTEX_STEP.RUnlock()
 	}
-	var str [_NUM_LANG]string
-	for i := _NUM_LANG; i > 0; i-- {
-		str[i] = s
-	}
-	return str
+	return fmt.Sprintf(msg, com...)
 }
