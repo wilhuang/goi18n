@@ -118,6 +118,14 @@ func (e *Enum[T]) ToValue(code Code) T {
 	return e.defVal
 }
 
+// Count 返回枚举值个数
+func (e *Enum[T]) Count() int {
+	if e == nil {
+		return 0
+	}
+	return len(e.sort)
+}
+
 // ListValue 返回枚举值列表
 func (e *Enum[T]) ListValue() []T {
 	if e == nil {

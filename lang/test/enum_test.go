@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func EnumTest(t *testing.T) {
+func TestEnum(t *testing.T) {
 	startVal, endVal := 4, 20558
 	entrieEnum := lang.NewEnum([]lang.Code{lang.ENTRIE_4}, &lang.EnumOption[int]{
 		Count:     endVal - startVal + 1,

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func CodeTest(t *testing.T) {
+func TestCode(t *testing.T) {
 	nt := time.Now()
 	langs := lang.GetLocaleIds()
 	codes := []lang.Code{
