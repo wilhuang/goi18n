@@ -82,12 +82,15 @@ func NewEnum[T Number](codes []Code, option *EnumOption[T]) *Enum[T] {
 		}
 	}
 	m := make(map[T]Code, option.Count)
+	m2 := make(map[Code]T, option.Count)
 	for i, v := range values {
 		m[v] = codes[i]
+		m2[codes[i]] = v
 	}
 
 	return &Enum[T]{
 		valToCode: m,
+		codeToVal: m2,
 		defCode:   option.DefaultCode,
 		defVal:    option.DefaultVal,
 		sort:      values,
@@ -116,6 +119,14 @@ func (e *Enum[T]) ToValue(code Code) T {
 		return v
 	}
 	return e.defVal
+}
+
+// Count 返回枚举值个数
+func (e *Enum[T]) Count() int {
+	if e == nil {
+		return 0
+	}
+	return len(e.sort)
 }
 
 // ListValue 返回枚举值列表
