@@ -14,7 +14,7 @@ type EnumOption[T Number] struct {
 	DefaultVal          T    // 非正确枚举对象时的返回，默认为0
 	CodeStep            Code // 枚举对象步长，正数，等于0时，则默认为1
 	IsCodeStepNegative  bool // 是否CodeStep为负数，默认为false
-	Values              []T  // 枚举值，按照顺序排列
+	Values              []T  // 枚举值，与codes对应，按照顺序排列，默认从0开始
 	ValueStep           T    // 枚举值步长，正数，等于0时，则默认为1
 	IsValueStepNegative bool // 是否ValueStep为负数，默认为false
 }
@@ -42,14 +42,9 @@ func NewEnum[T Number](codes []Code, option *EnumOption[T]) *Enum[T] {
 	if len(codes) == 0 {
 		return nil
 	}
-	values := option.Values
-	if len(values) == 0 {
-		values = append(values, 0)
-	}
 
 	lenCode := len(codes)
-	lenValue := len(values)
-	option.Count = Max(option.Count, lenCode, lenValue)
+	option.Count = Max(option.Count, lenCode)
 	if option.Count == 0 {
 		return nil
 	}
@@ -71,10 +66,14 @@ func NewEnum[T Number](codes []Code, option *EnumOption[T]) *Enum[T] {
 		}
 	}
 
+	values := option.Values
+	lenValue := len(values)
 	if option.Count > lenValue {
 		values = append(values, make([]T, option.Count-lenValue)...)
 		for i := lenValue; i < option.Count; i++ {
-			if option.IsValueStepNegative {
+			if i == 0 {
+				values[i] = 0
+			} else if option.IsValueStepNegative {
 				values[i] = values[i-1] - option.ValueStep
 			} else {
 				values[i] = values[i-1] + option.ValueStep
@@ -82,12 +81,15 @@ func NewEnum[T Number](codes []Code, option *EnumOption[T]) *Enum[T] {
 		}
 	}
 	m := make(map[T]Code, option.Count)
+	m2 := make(map[Code]T, option.Count)
 	for i, v := range values {
 		m[v] = codes[i]
+		m2[codes[i]] = v
 	}
 
 	return &Enum[T]{
 		valToCode: m,
+		codeToVal: m2,
 		defCode:   option.DefaultCode,
 		defVal:    option.DefaultVal,
 		sort:      values,
