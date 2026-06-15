@@ -44,7 +44,7 @@ func NewEnum[T Number](codes []Code, option *EnumOption[T]) *Enum[T] {
 	}
 
 	lenCode := len(codes)
-	option.Count = Max(option.Count, lenCode)
+	option.Count = max(option.Count, lenCode)
 	if option.Count == 0 {
 		return nil
 	}
